@@ -1,0 +1,16 @@
+{
+  "name": "chat",
+  "description": "chat",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x"
+   },
+   "scripts": {
+     "test": "vows server/test/*-test.js"
+   },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  }
+}
