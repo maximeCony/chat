@@ -1,4 +1,4 @@
- module.exports = function(app){
+ module.exports = function(app, io){
 
     //handel server error
     var handleError = function (err, req, res) {
@@ -23,6 +23,16 @@
         app.use(function(req, res){
             res.status(404).sendfile('./app/404.html');
         });
+
+        io.sockets.on('connection', function (socket) {
+            //message controller
+            controllers.MessageController = require('./controllers/MessageController')(models, socket, handleError);
+            //Read all messages
+            socket.on('messages:read', controllers.MessageController.read);
+            //Create a new message
+            socket.on('message:create', controllers.MessageController.create);
+        });
+
     }
     return this;
 };
