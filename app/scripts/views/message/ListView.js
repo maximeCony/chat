@@ -7,8 +7,9 @@ define([
 
     var MessageListView = Backbone.View.extend({
       
-      el: $('#messages'),
-
+      tagName: 'div',
+      className: 'message',
+      
       initialize: function(){
         //listen the add event
         this.collection.on('add', this.addOne, this);
