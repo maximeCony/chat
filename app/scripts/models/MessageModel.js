@@ -5,7 +5,8 @@ define([
   var MessageModel = Backbone.Model.extend({
     //objet id
     idAttribute: "_id",
-    urlRoot: '/messages'
+    socket: window.socket,
+    urlRoot: 'message'
   });
   // Return the model for the module
   return MessageModel;

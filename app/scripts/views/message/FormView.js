@@ -2,20 +2,17 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'backbone_iosync',
+  'backbone_iobind',
   'models/messageModel',
   'text!templates/message/form.html'
-  ], function($, _, Backbone, MessageModel, MessageFormTemplate){
+  ], function($, _, Backbone, backbone_iosync, backbone_iobind, MessageModel, MessageFormTemplate){
 
     var MessageFormView = Backbone.View.extend({
       tagName: 'div',
       className: 'messageForm',
       events: {
-        'submit': 'sendMessage' //submit the form
-      },
-
-      initialize: function(){
-
-        this.contentInput = $('#messageContent');
+        'submit #messageForm': 'sendMessage' //submit the form
       },
 
       /*
@@ -26,7 +23,9 @@ define([
         e.preventDefault();
 
         //get the inputs
-        var content = this.contentInput.val();
+        var content = $('#messageContent').val();
+
+        console.log(content);
 
         // prevent empty submit
         if (!content) return;
@@ -37,12 +36,10 @@ define([
         });
         
         // save the message (send socket)
-        _task.save();
+        _message.save();
         // empty the content field
-        this.contentInput.val('');
-
-        //save the message
-        this.model.save(messagePrototype);
+        $('#messageContent').val('');
+        
       },
 
       render: function(){

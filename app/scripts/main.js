@@ -7,10 +7,11 @@ require.config({
 	 paths: {
     	jquery: 'vendor/jquery/jquery.min',
     	underscore: 'vendor/underscore-amd/underscore-min',
-    	backbone: 'vendor/backbone-amd/backbone-min',
     	socketio: '../socket.io/socket.io',
-    	backbone_iobind: 'vendor/backbone.iobind/dist/backbone.iobind.min',
-    	backbone_iosync: 'vendor/backbone.iobind/dist/backbone.iosync.min'
+    	backbone: 'vendor/backbone-amd/backbone-min',
+    	backbone_iosync: 'vendor/backbone.iobind/dist/backbone.iosync.min',
+    	backbone_iobind: 'vendor/backbone.iobind/dist/backbone.iobind.min'
+    	
 	}
 });
 
