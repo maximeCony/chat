@@ -1,3 +1,11 @@
+.btn, button, input {
+	border-radius: 0 !important;
+}
+
 #title {
+	text-align: center;
+}
+
+#app {
 	text-align: center;
 }
