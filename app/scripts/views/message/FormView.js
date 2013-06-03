@@ -9,10 +9,11 @@ define([
   ], function($, _, Backbone, backbone_iosync, backbone_iobind, MessageModel, MessageFormTemplate){
 
     var MessageFormView = Backbone.View.extend({
-      tagName: 'div',
-      className: 'messageForm',
+      tagName: 'form',
+      className: 'pure-form',
+      id: 'messageForm',
       events: {
-        'submit #messageForm': 'sendMessage' //submit the form
+        'submit': 'sendMessage' //submit the form
       },
 
       /*
@@ -24,8 +25,6 @@ define([
 
         //get the inputs
         var content = $('#messageContent').val();
-
-        console.log(content);
 
         // prevent empty submit
         if (!content) return;

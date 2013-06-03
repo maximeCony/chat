@@ -40,13 +40,22 @@ router.start();
 
 //db object used to save messages
 var db = [
-/*
-    {_id:1, title: 'Server - New message', checked: false},
-    {_id:2, title: 'Server - New message 2', checked: true}
-*/
+    {"content":"test","_id":1},
+    {"content":"test 2","_id":2}
 ];
 
 io.sockets.on('connection', function (socket) {
+
+    /**
+    * message:read
+    *
+    * called when we .fetch() our collection
+    * in the client-side router
+    */
+    socket.on('messages:read', function (data, callback) {
+        console.log('READ');
+        callback(null, db);
+    });
 
     /**
     * message:create
@@ -66,8 +75,6 @@ io.sockets.on('connection', function (socket) {
         //send message to the other clients
         socket.broadcast.emit('messages:create', data);
         callback(null, data);
-
-        console.log('db', db);
     });
 
 });

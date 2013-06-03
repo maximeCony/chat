@@ -3,11 +3,20 @@ define([
   'underscore',
   'backbone',
   'views/message/FormView',
-  ], function($, _, Backbone, MessageFormView){
+  'collections/MessageCollection',
+  'views/message/ListView',
+  ], function($, _, Backbone, MessageFormView, MessageCollection, MessageListView){
     
     var AppRouter = Backbone.Router.extend({
       routes: { 
         "": "index"
+    },
+
+    initialize: function(){
+      //get the app container
+      this.appContainer = $('#app');
+      // initialize message collection
+      this.messages = new MessageCollection();
     },
 
     start: function(){
@@ -15,16 +24,15 @@ define([
       Backbone.history.start();
     },
 
-    initialize: function(){
-      //get the app container
-      this.appContainer = $('#app');
-    },
-
     index: function(){
       //create a new MessageFormView
       this.messageFormView = new MessageFormView();
+      // setup the messages view
+      var messageListView = new MessageListView({collection: this.messages});
       //set render content to the app container
-      this.appContainer.html(this.messageFormView.render().el)
+      this.appContainer.append(this.messageFormView.render().el);
+      //get data from the server
+      this.messages.fetch();
     }
 });
 

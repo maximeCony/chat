@@ -2,22 +2,23 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'views/location/ItemView',
-  ], function($, _, Backbone, LocationView){
+  'views/message/ItemView',
+  ], function($, _, Backbone, MessageView){
 
-    var LocationListView = Backbone.View.extend({
-      tagName: 'div',
+    var MessageListView = Backbone.View.extend({
+      
+      el: $('#messages'),
 
       initialize: function(){
         //listen the add event
         this.collection.on('add', this.addOne, this);
       },
 
-      addOne: function(location){
+      addOne: function(message){
         //create a new collection view
-        var locationView = new LocationView({model: location});
+        var messageView = new MessageView({model: message});
         //render the collection
-        this.$el.prepend(locationView.render().el);
+        this.$el.append(messageView.render().el);
       },
 
       render: function(){
@@ -27,5 +28,5 @@ define([
       }
     });
   // Our module now returns our view
-  return LocationListView;
+  return MessageListView;
 });
