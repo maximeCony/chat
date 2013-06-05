@@ -1,10 +1,14 @@
+body {
+    background: url('/img/back.png')
+}
+
 .btn, button, input {
 	border-radius: 0 !important;
 }
 
 #app, #title {
 	text-align: center;
-    max-width: 24em;
+    max-width: 30em;
     margin: auto;
 }
 
@@ -25,15 +29,41 @@
 
 .bubble {
     border-radius: 0 20px 20px 20px;
-    float: left;
-    width: 80%;
+    width: 60%;
+    margin-right: 30%;
 }
 
 .userBubble {
     border-radius: 20px 20px 0 20px;
-    float: right;
-    width: 80%;
+    width: 60%;
     text-align: right;
+    margin-left: 30%;
+}
+
+
+#messages {
+    background: none repeat scroll 0 0 white;
+    border-color: #AAAAAA;
+    border-style: solid solid none;
+    border-width: 1px 1px 0;
+    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+    height: 600px;
+    overflow-y: scroll;
+    padding-top: 1em;
+}
+
+
+.chatInput {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #AAAAAA;
+    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+    padding-bottom: 12px;
+    padding-top: 12px;
+    width: 99.6%;
+}
+
+#messageContent{
+    width: 75%;
 }
 
 

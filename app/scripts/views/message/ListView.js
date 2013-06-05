@@ -21,6 +21,8 @@ define([
         var messageView = new MessageView({model: message});
         //render the collection
         this.$el.append(messageView.render().el);
+
+        //this.$el.scrollTop(this.$el.height()+ 276)
       },
 
       render: function(){

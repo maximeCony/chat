@@ -35,7 +35,11 @@ define([
       //create a new MessageFormView
       var roomFormView = new RoomFormView();
       //set render content to the app container
-      this.appContainer.empty().append(roomFormView.render().el, '<section id="rooms"></section>');
+      this.appContainer.empty().append(
+        "<h2>Choose a room " + localStorage.USER_NAME + "</h2>", 
+        roomFormView.render().el, 
+        '<section id="rooms"></section>'
+      );
       // setup the messages view
       var roomListView = new RoomListView({
         collection: this.rooms,
@@ -48,7 +52,7 @@ define([
     user: function(){
       //create a new UserFormView
       var userFormView = new UserFormView();
-      this.appContainer.html(userFormView.render().el);
+      this.appContainer.empty().append("<h2>What's your name?</h2>", userFormView.render().el);
     },
 
     chat: function(_id){
@@ -58,7 +62,7 @@ define([
       //create a new MessageFormView
       var messageFormView = new MessageFormView();
       //set render content to the app container
-      this.appContainer.empty().append('<section id="messages"></section>', messageFormView.render().el);
+      this.appContainer.empty().append("<section id='messages'></section>", messageFormView.render().el);
       // setup the messages view
       var messageListView = new MessageListView({
         collection: this.messages,
