@@ -44,7 +44,9 @@
     * join the room
     */
     this.join = function (data) {
+        //save the room id in the socket
         socket.room_id = data._id;
+        //join the room
         socket.join(data._id);
     };
 

@@ -8,8 +8,9 @@
     */
     this.read = function (data, callback) {
 
-        //find all messages
+        //find messages
         models.Message.find({
+            //find by room
             room: socket.room_id
         }, function(err, messages){
             if (err) return handleError(err);
@@ -35,13 +36,14 @@
             
             //create a new message
             var message = new models.Message(data);
+            //set the message room
             message.room = room;
 
             //save it
             message.save(function (err) {
                 if (err) return handleError(err);
+                //send the create message to the clients in the room
                 io.sockets.in(socket.room_id).emit('messages:create', message);
-                //send message to the other clients
                 callback(null, message);
             });
 
