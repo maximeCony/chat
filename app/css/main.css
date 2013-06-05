@@ -48,7 +48,7 @@ body {
     border-width: 1px 1px 0;
     box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
     height: 600px;
-    overflow-y: scroll;
+    overflow: auto;
     padding-top: 1em;
 }
 

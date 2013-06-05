@@ -21,8 +21,9 @@ define([
         var messageView = new MessageView({model: message});
         //render the collection
         this.$el.append(messageView.render().el);
-
-        //this.$el.scrollTop(this.$el.height()+ 276)
+        //scroll to bottom
+        var objDiv = document.getElementById("messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
       },
 
       render: function(){
