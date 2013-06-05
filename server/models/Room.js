@@ -1,7 +1,8 @@
 module.exports = function(mongoose, models) {
 
-	//location Model
+	//room Model
 	return mongoose.model('Room', new mongoose.Schema({
-		name: String
+		name: String,
+		messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }]
 	}));
 };

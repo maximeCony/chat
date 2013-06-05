@@ -8,7 +8,8 @@
 
     //load Models
     var models = {};
-    //models.Room = require('./models/Room')(mongoose, models);
+    models.Message = require('./models/Message')(mongoose, models);
+    models.Room = require('./models/Room')(mongoose, models);
 
     //load Controllers
     var controllers = {};

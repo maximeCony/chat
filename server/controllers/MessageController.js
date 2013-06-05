@@ -1,11 +1,5 @@
  module.exports = function(handleError, models, socket, io){
 
- 	//fake db object used to save messages
- 	var db = [
-    	{"content":"test","_id":1},
-    	{"content":"test 2","_id":2}
-	];
-
  	/**
     * message:read
     *
@@ -13,8 +7,15 @@
     * in the client-side router
     */
     this.read = function (data, callback) {
-        console.log('READ');
-        callback(null, db);
+
+        //find all messages
+        models.Message.find({
+            room: socket.room_id
+        }, function(err, messages){
+            if (err) return handleError(err);
+            callback(null, messages);
+        });
+        
     };
 
     /**
@@ -26,15 +27,25 @@
     * on the collection namespace
     */
     this.create = function (data, callback) {
-        //set id
-        data._id = db.length + 1;
-        //add message to db
-        db.push(data);
-        //send message to the client
-        io.sockets.in(socket.room).emit('messages:create', data);
-        //send message to the other clients
-        //socket.broadcast.emit('messages:create', data);
-        callback(null, data);
+
+        //get the post by _id
+        models.Room.findById(socket.room_id, function (err, room) {
+
+            if (err) return handleError(err);
+            
+            //create a new message
+            var message = new models.Message(data);
+            message.room = room;
+
+            //save it
+            message.save(function (err) {
+                if (err) return handleError(err);
+                io.sockets.in(socket.room_id).emit('messages:create', message);
+                //send message to the other clients
+                callback(null, message);
+            });
+
+        });        
     };
 
     return this;
