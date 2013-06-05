@@ -2,9 +2,8 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'models/userModel',
   'text!templates/user/form.html'
-  ], function($, _, Backbone, UserModel, UserFormTemplate){
+  ], function($, _, Backbone, UserFormTemplate){
 
     var UserFormView = Backbone.View.extend({
       tagName: 'form',
@@ -20,22 +19,10 @@ define([
       saveUser :function(e){
 
         e.preventDefault();
-
         //get the inputs
-        var userName = $('#userName').val();
-
-        // prevent empty submit
-        if (!userName) return;
-        
-        // Create a new task
-        var _user = new UserModel({
-          userName: userName
-        });
-        
-        // save the user (send socket)
-        _user.save();
-        // empty the content field
-        $('#userName').val('');
+        localStorage.USER_NAME = $('#userName').val();
+        //navigate to room selection
+        Backbone.history.navigate('room', { trigger: true });
         
       },
 

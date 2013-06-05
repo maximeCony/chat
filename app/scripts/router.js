@@ -13,12 +13,12 @@ define([
     
     var AppRouter = Backbone.Router.extend({
       routes: { 
-        "": "room",
-        "user": "user",
+        "": "user",
+        "room": "room",
         "room/:_id/chat": "chat"
     },
 
-    initialize: function(){
+    initialize: function() {
       //get the app container
       this.appContainer = $('#app');
       // initialize message collection

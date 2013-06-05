@@ -28,10 +28,11 @@ define([
 
         // prevent empty submit
         if (!content) return;
-        
+
         // Create a new message
         var _message = new MessageModel({
-          content: content
+          content: content,
+          userName: localStorage.USER_NAME
         });
         
         // save the message (send socket)
