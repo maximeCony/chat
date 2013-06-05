@@ -37,5 +37,15 @@
         callback(null, data);
     };
 
+    /**
+    * room:join
+    *
+    * join the room
+    */
+    this.join = function (data) {
+        socket.room = data._id;
+        socket.join(data._id);
+    };
+
     return this;
 };

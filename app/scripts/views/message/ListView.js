@@ -17,7 +17,6 @@ define([
 
       addOne: function(message){
 
-        console.log('addOne');
         //create a new collection view
         var messageView = new MessageView({model: message});
         //render the collection

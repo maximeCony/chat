@@ -1,4 +1,4 @@
- module.exports = function(handleError, models, socket){
+ module.exports = function(handleError, models, socket, io){
 
  	//fake db object used to save messages
  	var db = [
@@ -31,9 +31,9 @@
         //add message to db
         db.push(data);
         //send message to the client
-        socket.emit('messages:create', data);
+        io.sockets.in(socket.room).emit('messages:create', data);
         //send message to the other clients
-        socket.broadcast.emit('messages:create', data);
+        //socket.broadcast.emit('messages:create', data);
         callback(null, data);
     };
 

@@ -15,7 +15,7 @@ define([
       routes: { 
         "": "room",
         "user": "user",
-        "room/:id/chat": "chat"
+        "room/:_id/chat": "chat"
     },
 
     initialize: function(){
@@ -51,7 +51,9 @@ define([
       this.appContainer.html(userFormView.render().el);
     },
 
-    chat: function(id){
+    chat: function(_id){
+
+      window.socket.emit('room:join', {_id: _id});
 
       //create a new MessageFormView
       var messageFormView = new MessageFormView();

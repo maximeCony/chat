@@ -39,7 +39,7 @@
         io.sockets.on('connection', function (socket) {
 
             //message controller
-            controllers.MessageController = require('./controllers/MessageController')(handleError, models, socket, rooms);
+            controllers.MessageController = require('./controllers/MessageController')(handleError, models, socket, io);
             //Read all messages
             socket.on('messages:read', controllers.MessageController.read);
             //Create a new message
@@ -51,6 +51,8 @@
             socket.on('rooms:read', controllers.RoomController.read);
             //Create a new room
             socket.on('room:create', controllers.RoomController.create);
+            //Join a new room
+            socket.on('room:join', controllers.RoomController.join);
         });
 
     }
