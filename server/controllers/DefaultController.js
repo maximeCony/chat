@@ -1,4 +1,4 @@
- module.exports = function(models, handleError){
+ module.exports = function(handleError, models){
 
     //get index
     this.index = function(req, res){

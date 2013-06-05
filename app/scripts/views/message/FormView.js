@@ -29,13 +29,14 @@ define([
         // prevent empty submit
         if (!content) return;
         
-        // Create a new task
+        // Create a new message
         var _message = new MessageModel({
           content: content
         });
         
         // save the message (send socket)
         _message.save();
+
         // empty the content field
         $('#messageContent').val('');
         

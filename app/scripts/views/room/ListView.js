@@ -2,26 +2,24 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'views/message/ItemView',
-  ], function($, _, Backbone, MessageView){
+  'views/room/ItemView',
+  ], function($, _, Backbone, RoomView){
 
-    var MessageListView = Backbone.View.extend({
+    var RoomListView = Backbone.View.extend({
       
       tagName: 'div',
-      className: 'messages',
+      className: 'rooms',
       
       initialize: function(){
         //listen the add event
         this.collection.on('add', this.addOne, this);
       },
 
-      addOne: function(message){
-
-        console.log('addOne');
+      addOne: function(room){
         //create a new collection view
-        var messageView = new MessageView({model: message});
+        var roomView = new RoomView({model: room});
         //render the collection
-        this.$el.append(messageView.render().el);
+        this.$el.append(roomView.render().el);
       },
 
       render: function(){
@@ -31,5 +29,5 @@ define([
       }
     });
   // Our module now returns our view
-  return MessageListView;
+  return RoomListView;
 });

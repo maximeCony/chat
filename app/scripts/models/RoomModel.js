@@ -5,7 +5,8 @@ define([
   var RoomModel = Backbone.Model.extend({
     //objet id
     idAttribute: "_id",
-    urlRoot: '/rooms'
+    socket: window.socket,
+    urlRoot: 'room'
   });
   // Return the model for the module
   return RoomModel;

@@ -1,5 +1,6 @@
 var express = require('express')
-,app = express()
+, app = express()
+, mongoose = require('mongoose')
 , server = require('http').createServer(app)
 , io = require('socket.io').listen(server);
 
@@ -10,6 +11,18 @@ app.configure(function(){
 
     //used to parse forms
     app.use(express.bodyParser());
+
+    //mongodb configuration
+    var uristring = 
+    process.env.MONGOLAB_URI || 
+    process.env.MONGOHQ_URL || 
+    'mongodb://localhost/chat';
+
+    //connect to mongodb
+    mongoose.connect(uristring, function (err, res) {
+        if(err) console.log('ERROR connecting to: ' + uristring + '. ' + err);
+        else console.log('Succeeded connected to: ' + uristring);
+    });
 });
 
 // configuration for development only
@@ -35,7 +48,7 @@ app.configure('production', function(){
 });
 
 //initialize router
-var router = require('./server/router')(app, io);
+var router = require('./server/router')(app, io, mongoose);
 router.start();
 
 //start listening

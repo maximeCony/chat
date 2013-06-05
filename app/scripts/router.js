@@ -4,13 +4,18 @@ define([
   'backbone',
   'views/message/FormView',
   'collections/MessageCollection',
+  'collections/RoomCollection',
   'views/message/ListView',
-  ], function($, _, Backbone, MessageFormView, MessageCollection, MessageListView){
+  'views/room/ListView',
+  'views/user/FormView',
+  'views/room/FormView'
+  ], function($, _, Backbone, MessageFormView, MessageCollection, RoomCollection, MessageListView, RoomListView, UserFormView, RoomFormView){
     
     var AppRouter = Backbone.Router.extend({
       routes: { 
-        "": "chat",
-        "chat": "chat"
+        "": "room",
+        "user": "user",
+        "room/:id/chat": "chat"
     },
 
     initialize: function(){
@@ -18,6 +23,7 @@ define([
       this.appContainer = $('#app');
       // initialize message collection
       this.messages = new MessageCollection();
+      this.rooms = new RoomCollection();
     },
 
     start: function(){
@@ -25,18 +31,37 @@ define([
       Backbone.history.start();
     },
 
-    start: function(){
-      //start backbon history
-      Backbone.history.start();
-    },
-
-    chat: function(){
+    room: function(){
       //create a new MessageFormView
-      this.messageFormView = new MessageFormView();
-      // setup the messages view
-      var messageListView = new MessageListView({collection: this.messages});
+      var roomFormView = new RoomFormView();
       //set render content to the app container
-      this.appContainer.append(messageListView.render().el, this.messageFormView.render().el);
+      this.appContainer.empty().append(roomFormView.render().el, '<section id="rooms"></section>');
+      // setup the messages view
+      var roomListView = new RoomListView({
+        collection: this.rooms,
+        el: $('#rooms')
+      });
+      //get data from the server
+      this.rooms.fetch();
+    },
+
+    user: function(){
+      //create a new UserFormView
+      var userFormView = new UserFormView();
+      this.appContainer.html(userFormView.render().el);
+    },
+
+    chat: function(id){
+
+      //create a new MessageFormView
+      var messageFormView = new MessageFormView();
+      //set render content to the app container
+      this.appContainer.empty().append('<section id="messages"></section>', messageFormView.render().el);
+      // setup the messages view
+      var messageListView = new MessageListView({
+        collection: this.messages,
+        el: $('#messages')
+      });
       //get data from the server
       this.messages.fetch();
     }

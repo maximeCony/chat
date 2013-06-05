@@ -2,10 +2,22 @@
 	border-radius: 0 !important;
 }
 
-#title {
+#app, #title {
 	text-align: center;
 }
 
-#app {
-	text-align: center;
+.joinRoom {
+    float: right;
+    margin-right: -0.5em;
+    margin-top: -0.35em;
+}
+
+.alert {
+    margin: auto auto 1em;
+    max-width: 24em;
+    padding-right: 0.7em;
+    text-align: left;
+    border-radius: 0;
+    border: 1px solid #AAAAAA;
+    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
 }

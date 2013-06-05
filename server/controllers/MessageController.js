@@ -1,4 +1,4 @@
- module.exports = function(models, socket, handleError){
+ module.exports = function(handleError, models, socket){
 
  	//fake db object used to save messages
  	var db = [
