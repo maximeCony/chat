@@ -65,17 +65,13 @@ define([
       //set render content to the app container
       this.appContainer.empty().append("<section id='messages'></section>", messageFormView.render().el);
 
-      var messagesContainer = $('#messages');
-
       // setup the messages view
       var messageListView = new MessageListView({
         collection: this.messages,
-        el: messagesContainer
-      });
+        el: $('#messages')
+      }).resize();
       //get data from the server
       this.messages.fetch();
-      //set chat container height
-      messagesContainer.height($(window).height() - $('#messageForm').height() - 15);
     }
 });
 

@@ -9,10 +9,18 @@ define([
       
       tagName: 'div',
       className: 'messages',
-      
+
       initialize: function(){
         //listen the add event
         this.collection.on('add', this.addOne, this);
+        //resize event
+        $(window).off('resize').on('resize', this.resize);
+      },
+
+      resize: function(){
+        //set chat container height
+        $('#messages').height($(window).height() - $('#messageForm').height() - 15);
+        return this;
       },
 
       addOne: function(message){
