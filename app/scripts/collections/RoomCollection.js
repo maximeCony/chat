@@ -16,8 +16,7 @@ define([
       
       serverCreate: function (json) {
           // make sure no duplicates, just in case
-          var exists = this.get(json._id);
-          if (!exists) {
+          if (!this.get(json._id)) {
             this.add(json);
           }
       }

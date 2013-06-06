@@ -36,9 +36,10 @@ define([
       var roomFormView = new RoomFormView();
       //set render content to the app container
       this.appContainer.empty().append(
-        "<h2>Choose a room " + localStorage.USER_NAME + "</h2>", 
-        roomFormView.render().el, 
-        '<section id="rooms"></section>'
+        "<h2>Join a room</h2>",
+        '<section id="rooms"></section>',
+        "<h2>Or create a new one</h2>",
+        roomFormView.render().el
       );
       // setup the messages view
       var roomListView = new RoomListView({
@@ -63,13 +64,18 @@ define([
       var messageFormView = new MessageFormView();
       //set render content to the app container
       this.appContainer.empty().append("<section id='messages'></section>", messageFormView.render().el);
+
+      var messagesContainer = $('#messages');
+
       // setup the messages view
       var messageListView = new MessageListView({
         collection: this.messages,
-        el: $('#messages')
+        el: messagesContainer
       });
       //get data from the server
       this.messages.fetch();
+      //set chat container height
+      messagesContainer.height($(window).height() - $('#messageForm').height() - 15);
     }
 });
 
