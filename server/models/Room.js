@@ -5,5 +5,11 @@ module.exports = function(mongoose, models) {
 		name: String,
 		lastActivity: { type: Date, default: Date.now }, 
 		messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }]
+	})
+	.pre('remove', function(next) {
+		console.log('messages!');
+		models.Message.remove({room: this._id}).exec();
+		next();
 	}));
 };
+

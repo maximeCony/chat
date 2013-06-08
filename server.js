@@ -47,8 +47,13 @@ app.configure('production', function(){
     app.set('views', __dirname + appDir);
 });
 
+//initialize Models
+var models = {};
+models.Message = require('./server/models/Message')(mongoose, models);
+models.Room = require('./server/models/Room')(mongoose, models);
+
 //initialize router
-var router = require('./server/router')(app, io, mongoose);
+var router = require('./server/router')(app, io, models);
 router.start();
 
 //start listening
@@ -60,6 +65,6 @@ server.listen(port, function() {
 //initialize services
 var services = {};
 //^^
-services.roomService = require('./server/RoomService')(mongoose);
+services.roomService = require('./server/services/RoomService')(models);
 //Make the foursquare call every 2 hours / 7200000 millisec
-setInterval(services.roomService.cleanRooms(), 6000);
+setInterval(services.roomService.cleanRooms, 7200000);

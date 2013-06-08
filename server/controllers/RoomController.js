@@ -44,13 +44,15 @@
     * join the room
     */
     this.join = function (data) {
+
+        if(!data._id) return;
         //save the room id in the socket
         socket.room_id = data._id;
         //get the post by _id and update is last activity date
         models.Room.findByIdAndUpdate(socket.room_id, {lastActivity: Date.now()}, function(err, room){
             if (err) return handleError(err);
             //join the room
-            socket.join(room._id);
+            socket.join(data._id);
         });
     };
 

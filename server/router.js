@@ -1,15 +1,10 @@
- module.exports = function(app, io, mongoose){
+ module.exports = function(app, io, models){
 
     //handel server error
     var handleError = function (err, req, res) {
       console.error(err.stack);
       res.status(500).sendfile('./app/500.html');
     }
-
-    //load Models
-    var models = {};
-    models.Message = require('./models/Message')(mongoose, models);
-    models.Room = require('./models/Room')(mongoose, models);
 
     //load Controllers
     var controllers = {};
