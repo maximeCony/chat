@@ -27,13 +27,13 @@ define([
       },
 
       render: function(){
-
+        //get user name
+        var userName = localStorage.USER_NAME || "";
         //compil the template
-        var compiledTemplate = _.template(UserFormTemplate);
-
+        var compiledTemplate = _.template(UserFormTemplate, {userName: userName});
         //set the contentin the app container
         this.$el.html(compiledTemplate);
-
+        //used for chaining
         return this;
       }
 

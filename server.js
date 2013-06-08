@@ -56,3 +56,10 @@ var port = process.env.PORT || 8080;
 server.listen(port, function() {
     console.log("Listening on " + port);
 });
+
+//initialize services
+var services = {};
+//^^
+services.roomService = require('./server/RoomService')(mongoose);
+//Make the foursquare call every 2 hours / 7200000 millisec
+setInterval(services.roomService.cleanRooms(), 6000);
