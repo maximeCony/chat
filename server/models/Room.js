@@ -7,7 +7,7 @@ module.exports = function(mongoose, models) {
 		messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }]
 	})
 	.pre('remove', function(next) {
-		console.log('messages!');
+		//Delete Cascade
 		models.Message.remove({room: this._id}).exec();
 		next();
 	}));

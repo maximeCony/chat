@@ -1,10 +1,11 @@
 require.config({
 	paths: {
-		jquery: 'vendor/jquery/jquery.min',
-		underscore: 'vendor/underscore-amd/underscore',
+		jquery: '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
+		underscore: 'vendor/underscore-amd/underscore-min',
 		backbone: 'vendor/backbone-amd/backbone-min',
-		backbone_iosync: 'vendor/backbone.iobind/dist/backbone.iosync.min',
-		backbone_iobind: 'vendor/backbone.iobind/dist/backbone.iobind.min'	
+		iosync: 'vendor/backbone.iobind/dist/backbone.iosync.min',
+		iobind: 'vendor/backbone.iobind/dist/backbone.iobind.min',
+		bbloader: 'bbloader'	
 	}
 });
 

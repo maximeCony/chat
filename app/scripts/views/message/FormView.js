@@ -1,12 +1,10 @@
 define([
   'jquery',
   'underscore',
-  'backbone',
-  'backbone_iosync',
-  'backbone_iobind',
+  'bbloader',
   'models/messageModel',
   'text!templates/message/form.html'
-  ], function($, _, Backbone, backbone_iosync, backbone_iobind, MessageModel, MessageFormTemplate){
+  ], function($, _, Backbone, MessageModel, MessageFormTemplate){
 
     var MessageFormView = Backbone.View.extend({
       tagName: 'form',

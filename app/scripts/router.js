@@ -21,9 +21,6 @@ define([
     initialize: function() {
       //get the app container
       this.appContainer = $('#app');
-      // initialize message collection
-      this.messages = new MessageCollection();
-      this.rooms = new RoomCollection();
     },
 
     start: function(){
@@ -32,6 +29,9 @@ define([
     },
 
     room: function(){
+
+      //initialize the collection
+      rooms = new RoomCollection();
       
       //create a new MessageFormView
       var roomFormView = new RoomFormView();
@@ -46,7 +46,7 @@ define([
       
       // setup the messages view
       var roomListView = new RoomListView({
-        collection: this.rooms,
+        collection: rooms,
         el: $('#rooms')
       });
       
@@ -54,7 +54,7 @@ define([
       roomListView.render();
 
       //get data from the server
-      this.rooms.fetch();
+      rooms.fetch();
     },
 
     user: function(){
@@ -74,6 +74,9 @@ define([
       //emit socket to join the room
       window.socket.emit('room:join', {_id: _id});
 
+      //initialize the collection
+      var messages = new MessageCollection();
+
       //create a new MessageFormView
       var messageFormView = new MessageFormView();
       
@@ -85,7 +88,7 @@ define([
 
       // setup the messages view
       var messageListView = new MessageListView({
-        collection: this.messages,
+        collection: messages,
         el: $('#messages')
       }).resize();
 
@@ -93,7 +96,7 @@ define([
       messageListView.render();
 
       //get data from the server
-      this.messages.fetch();
+      messages.fetch();
       
     }
 });

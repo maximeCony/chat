@@ -1,3 +1,4 @@
+rm -rf ./dist
 r.js -o app.build.js
-cd /dist
+cd ./dist
 rm -rf build build.txt scripts/views scripts/models scripts/collections

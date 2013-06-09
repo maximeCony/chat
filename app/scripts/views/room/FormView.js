@@ -1,12 +1,10 @@
 define([
   'jquery',
   'underscore',
-  'backbone',
-  'backbone_iosync',
-  'backbone_iobind',
+  'bbloader',
   'models/roomModel',
   'text!templates/room/form.html'
-  ], function($, _, Backbone, backbone_iosync, backbone_iobind, RoomModel, RoomFormTemplate){
+  ], function($, _, Backbone, RoomModel, RoomFormTemplate){
 
     var RoomFormView = Backbone.View.extend({
       tagName: 'form',
