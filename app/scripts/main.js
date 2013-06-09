@@ -13,7 +13,7 @@ require([
   'app'
 ], function(App){
 
-	window.socket = io.connect('http://' + document.domain);
+	window.socket = io.connect(window.location.hostname);
 	/*
 	*   Log sockets
 	*/
