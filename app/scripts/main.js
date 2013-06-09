@@ -1,16 +1,16 @@
 require.config({
 	paths: {
-		jquery: '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
+		jquery: 'vendor/jquery/jquery.min',
 		underscore: 'vendor/underscore-amd/underscore-min',
 		backbone: 'vendor/backbone-amd/backbone-min',
 		iosync: 'vendor/backbone.iobind/dist/backbone.iosync',
 		iobind: 'vendor/backbone.iobind/dist/backbone.iobind',
-		bbloader: 'bbloader'
+		bbloader: 'bbloader',
 	}
 });
 
 require([
-  'app'
+  	'app',
 ], function(App){
 
 	window.socket = io.connect(window.location.hostname);
