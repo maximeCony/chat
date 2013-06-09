@@ -6,14 +6,16 @@ var express = require('express')
 
 var appDir;
 
+//heroku config
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
+
 // configuration for all environments
 app.configure(function(){
 
-    //heroku config
-    io.configure(function () { 
-      io.set("transports", ["xhr-polling"]); 
-      io.set("polling duration", 10); 
-    });
+
 
     //used to parse forms
     app.use(express.bodyParser());
