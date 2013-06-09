@@ -2,7 +2,7 @@ define([
   'jquery',
   'underscore',
   'bbloader',
-  'models/roomModel',
+  'models/RoomModel',
   'text!templates/room/form.html'
   ], function($, _, Backbone, RoomModel, RoomFormTemplate){
 

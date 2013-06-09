@@ -2,7 +2,7 @@ define([
   'jquery',
   'underscore',
   'bbloader',
-  'models/messageModel',
+  'models/MessageModel',
   'text!templates/message/form.html'
   ], function($, _, Backbone, MessageModel, MessageFormTemplate){
 
