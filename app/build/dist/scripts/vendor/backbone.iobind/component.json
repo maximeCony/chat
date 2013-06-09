@@ -1,0 +1,8 @@
+{
+  "name": "backbone.iobind",
+  "version": "0.4.6",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/logicalparadox/backbone.iobind.git"
+  }
+}

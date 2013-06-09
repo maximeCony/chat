@@ -1,0 +1,1 @@
+define(["router"],function(e){var t=function(){e.initialize()};return{initialize:t}});
