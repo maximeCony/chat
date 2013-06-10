@@ -11,6 +11,11 @@ define([
 
       render: function(){
 
+        if(typeof localStorage.USER_NAME === 'undefined') {
+          //go back to the username input
+          return Backbone.history.navigate('', { trigger: true });
+        }
+
         //compil the template
         var compiledTemplate = _.template(MessageTemplate, this.model.attributes);
 

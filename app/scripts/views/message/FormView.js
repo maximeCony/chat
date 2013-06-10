@@ -21,6 +21,11 @@ define([
 
         e.preventDefault();
 
+        if(typeof localStorage.USER_NAME === 'undefined') {
+          //go back to the username input
+          return Backbone.history.navigate('', { trigger: true });
+        }
+
         //get the inputs
         var content = $('#messageContent').val();
 

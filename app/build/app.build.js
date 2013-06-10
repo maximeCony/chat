@@ -6,5 +6,5 @@
 	name: "main",
 	optimizeCss: "standard",
 	skipDirOptimize: true,
-	optimize: "uglify2",
+	optimize: "uglify2"
 })

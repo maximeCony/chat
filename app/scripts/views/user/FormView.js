@@ -12,7 +12,7 @@ define([
       events: {
         'submit': 'saveUser' //submit the form
       },
-
+      
       /*
       * send user
       */
@@ -23,14 +23,16 @@ define([
         localStorage.USER_NAME = $('#userName').val();
         //navigate to room selection
         Backbone.history.navigate('room', { trigger: true });
-        
       },
 
       render: function(){
-        //get user name
-        var userName = localStorage.USER_NAME || "";
+        
+        if(typeof localStorage.USER_NAME === 'undefined') {
+          //go back to the username input
+          return Backbone.history.navigate('', { trigger: true });
+        }
         //compil the template
-        var compiledTemplate = _.template(UserFormTemplate, {userName: userName});
+        var compiledTemplate = _.template(UserFormTemplate, {userName: localStorage.USER_NAME});
         //set the contentin the app container
         this.$el.html(compiledTemplate);
         //used for chaining
