@@ -12,7 +12,7 @@ define([
       events: {
         'submit': 'saveUser' //submit the form
       },
-      
+
       /*
       * send user
       */
@@ -27,10 +27,6 @@ define([
 
       render: function(){
         
-        if(typeof localStorage.USER_NAME === 'undefined') {
-          //go back to the username input
-          return Backbone.history.navigate('', { trigger: true });
-        }
         //compil the template
         var compiledTemplate = _.template(UserFormTemplate, {userName: localStorage.USER_NAME});
         //set the contentin the app container
