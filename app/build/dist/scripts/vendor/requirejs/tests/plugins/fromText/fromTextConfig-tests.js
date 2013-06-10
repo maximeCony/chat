@@ -1,1 +1,38 @@
-require({baseUrl:requirejs.isBrowser?"./":"./plugins/fromText",paths:{text:"../../../../text/text"},config:{"refine!b":{color:"blue"},"refine!c":{color:"cyan"}}}),define("refine!c",["require","exports","module"],function(e,t,n){return{name:"c",color:n.config().color}}),require(["refine!b","refine!c"],function(e,t){doh.register("pluginsFromTextConfig",[function(r){r.is("b",e.name),r.is("blue",e.color),r.is("c",t.name),r.is("cyan",t.color)}]),doh.run()});
+require({
+    baseUrl: requirejs.isBrowser ? './' : './plugins/fromText',
+    paths: {
+        'text': '../../../../text/text'
+    },
+    config: {
+        'refine!b': {
+            color: 'blue'
+        },
+        'refine!c': {
+            color: 'cyan'
+        }
+    }
+});
+
+//The refine plugin changes the word refine into define.
+define('refine!c', function (require, exports, module) {
+    return {
+        name: 'c',
+        color: module.config().color
+    };
+});
+
+require(['refine!b', 'refine!c'], function (b, c) {
+
+    doh.register(
+        'pluginsFromTextConfig',
+        [
+            function pluginsFromTextConfig(t){
+                t.is('b', b.name);
+                t.is('blue', b.color);
+                t.is('c', c.name);
+                t.is('cyan', c.color);
+             }
+        ]
+    );
+    doh.run();
+});

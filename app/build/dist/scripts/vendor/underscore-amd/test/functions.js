@@ -1,1 +1,265 @@
-$(document).ready(function(){module("Functions"),test("bind",function(){var e={name:"moe"},t=function(e){return"name: "+(this.name||e)},n=_.bind(t,e);equal(n(),"name: moe","can bind a function to a context"),n=_(t).bind(e),equal(n(),"name: moe","can do OO-style binding"),n=_.bind(t,null,"curly"),equal(n(),"name: curly","can bind without specifying a context"),t=function(e,t){return e+": "+t},t=_.bind(t,this,"hello"),equal(t("moe"),"hello: moe","the function was partially applied in advance"),t=_.bind(t,this,"curly"),equal(t(),"hello: curly","the function was completely applied in advance"),t=function(e,t,n){return e+": "+t+" "+n},t=_.bind(t,this,"hello","moe","curly"),equal(t(),"hello: moe curly","the function was partially applied in advance and can accept multiple arguments"),t=function(e,t){equal(this,e,t)},_.bind(t,0,0,"can bind a function to `0`")(),_.bind(t,"","","can bind a function to an empty string")(),_.bind(t,!1,!1,"can bind a function to `false`")();var r=function(){return this},i=_.bind(r,{hello:"moe curly"});equal(i().hello,"moe curly","When called without the new operator, it's OK to be bound to the context")}),test("partial",function(){var e={name:"moe"},t=function(){return this.name+" "+_.toArray(arguments).join(" ")};e.func=_.partial(t,"a","b"),equal(e.func("c","d"),"moe a b c d","can partially apply")}),test("bindAll",function(){var e={name:"curly"},t={name:"moe",getName:function(){return"name: "+this.name},sayHi:function(){return"hi: "+this.name}};e.getName=t.getName,_.bindAll(t,"getName","sayHi"),e.sayHi=t.sayHi,equal(e.getName(),"name: curly","unbound function is bound to current object"),equal(e.sayHi(),"hi: moe","bound function is still bound to original object"),e={name:"curly"},t={name:"moe",getName:function(){return"name: "+this.name},sayHi:function(){return"hi: "+this.name}},_.bindAll(t),e.sayHi=t.sayHi,equal(e.sayHi(),"hi: moe","calling bindAll with no arguments binds all functions to the object")}),test("memoize",function(){var e=function(t){return t<2?t:e(t-1)+e(t-2)},t=_.memoize(e);equal(e(10),55,"a memoized version of fibonacci produces identical results"),equal(t(10),55,"a memoized version of fibonacci produces identical results");var n=function(e){return e},r=_.memoize(n);equal(n("toString"),"toString","checks hasOwnProperty"),equal(r("toString"),"toString","checks hasOwnProperty")}),asyncTest("delay",2,function(){var e=!1;_.delay(function(){e=!0},100),setTimeout(function(){ok(!e,"didn't delay the function quite yet")},50),setTimeout(function(){ok(e,"delayed the function"),start()},150)}),asyncTest("defer",1,function(){var e=!1;_.defer(function(t){e=t},!0),_.delay(function(){ok(e,"deferred the function"),start()},50)}),asyncTest("throttle",2,function(){var e=0,t=function(){e++},n=_.throttle(t,32);n(),n(),equal(e,1,"incr was called immediately"),_.delay(function(){equal(e,2,"incr was throttled"),start()},64)}),asyncTest("throttle arguments",2,function(){var e=0,t=function(t){e=t},n=_.throttle(t,32);n(1),n(2),_.delay(function(){n(3)},64),equal(e,1,"updated to latest value"),_.delay(function(){equal(e,3,"updated to latest value"),start()},96)}),asyncTest("throttle once",2,function(){var e=0,t=function(){return++e},n=_.throttle(t,32),r=n();_.delay(function(){equal(r,1,"throttled functions return their value"),equal(e,1,"incr was called once"),start()},64)}),asyncTest("throttle twice",1,function(){var e=0,t=function(){e++},n=_.throttle(t,32);n(),n(),_.delay(function(){equal(e,2,"incr was called twice"),start()},64)}),asyncTest("throttle repeatedly with results",6,function(){var e=0,t=function(){return++e},n=_.throttle(t,64),r=[],i=function(){r.push(n())};i(),i(),_.delay(i,32),_.delay(i,80),_.delay(i,96),_.delay(i,144),_.delay(function(){equal(r[0],1,"incr was called once"),equal(r[1],1,"incr was throttled"),equal(r[2],1,"incr was throttled"),equal(r[3],2,"incr was called twice"),equal(r[4],2,"incr was throttled"),equal(r[5],3,"incr was called trailing"),start()},192)}),asyncTest("throttle triggers trailing call when invoked repeatedly",2,function(){var e=0,t=48,n=function(){e++},r=_.throttle(n,32),i=new Date;while(new Date-i<t)r();var s=e;ok(e>1),_.delay(function(){ok(e>s),start()},96)}),asyncTest("debounce",1,function(){var e=0,t=function(){e++},n=_.debounce(t,32);n(),n(),_.delay(n,16),_.delay(function(){equal(e,1,"incr was debounced"),start()},96)}),asyncTest("debounce asap",4,function(){var e,t,n=0,r=function(){return++n},i=_.debounce(r,64,!0);e=i(),t=i(),equal(e,1),equal(t,1),equal(n,1,"incr was called immediately"),_.delay(i,16),_.delay(i,32),_.delay(i,48),_.delay(function(){equal(n,1,"incr was debounced"),start()},128)}),asyncTest("debounce asap recursively",2,function(){var e=0,t=_.debounce(function(){e++,e<10&&t()},32,!0);t(),equal(e,1,"incr was called immediately"),_.delay(function(){equal(e,1,"incr was debounced"),start()},96)}),test("once",function(){var e=0,t=_.once(function(){e++});t(),t(),equal(e,1)}),test("wrap",function(){var e=function(e){return"hi: "+e},t=_.wrap(e,function(e,t){return e(t)+" "+t.split("").reverse().join("")});equal(t("moe"),"hi: moe eom","wrapped the saluation function");var n=function(){return"Hello "},r={name:"Moe"};r.hi=_.wrap(n,function(e){return e()+this.name}),equal(r.hi(),"Hello Moe");var i=function(){},s=_.wrap(i,function(e){return Array.prototype.slice.call(arguments,0)}),o=s(["whats","your"],"vector","victor");deepEqual(o,[i,["whats","your"],"vector","victor"])}),test("compose",function(){var e=function(e){return"hi: "+e},t=function(e){return e+"!"},n=_.compose(t,e);equal(n("moe"),"hi: moe!","can compose a function that takes another"),n=_.compose(e,t),equal(n("moe"),"hi: moe!","in this case, the functions are also commutative")}),test("after",function(){var e=function(e,t){var n=0,r=_.after(e,function(){n++});while(t--)r();return n};equal(e(5,5),1,"after(N) should fire after being called N times"),equal(e(5,4),0,"after(N) should not fire unless called N times"),equal(e(0,0),1,"after(0) should fire immediately")})});
+$(document).ready(function() {
+
+  module("Functions");
+
+  test("bind", function() {
+    var context = {name : 'moe'};
+    var func = function(arg) { return "name: " + (this.name || arg); };
+    var bound = _.bind(func, context);
+    equal(bound(), 'name: moe', 'can bind a function to a context');
+
+    bound = _(func).bind(context);
+    equal(bound(), 'name: moe', 'can do OO-style binding');
+
+    bound = _.bind(func, null, 'curly');
+    equal(bound(), 'name: curly', 'can bind without specifying a context');
+
+    func = function(salutation, name) { return salutation + ': ' + name; };
+    func = _.bind(func, this, 'hello');
+    equal(func('moe'), 'hello: moe', 'the function was partially applied in advance');
+
+    func = _.bind(func, this, 'curly');
+    equal(func(), 'hello: curly', 'the function was completely applied in advance');
+
+    func = function(salutation, firstname, lastname) { return salutation + ': ' + firstname + ' ' + lastname; };
+    func = _.bind(func, this, 'hello', 'moe', 'curly');
+    equal(func(), 'hello: moe curly', 'the function was partially applied in advance and can accept multiple arguments');
+
+    func = function(context, message) { equal(this, context, message); };
+    _.bind(func, 0, 0, 'can bind a function to `0`')();
+    _.bind(func, '', '', 'can bind a function to an empty string')();
+    _.bind(func, false, false, 'can bind a function to `false`')();
+
+    // These tests are only meaningful when using a browser without a native bind function
+    // To test this with a modern browser, set underscore's nativeBind to undefined
+    var F = function () { return this; };
+    var Boundf = _.bind(F, {hello: "moe curly"});
+    equal(Boundf().hello, "moe curly", "When called without the new operator, it's OK to be bound to the context");
+  });
+
+  test("partial", function() {
+    var obj = {name: 'moe'};
+    var func = function() { return this.name + ' ' + _.toArray(arguments).join(' '); };
+
+    obj.func = _.partial(func, 'a', 'b');
+    equal(obj.func('c', 'd'), 'moe a b c d', 'can partially apply');
+  });
+
+  test("bindAll", function() {
+    var curly = {name : 'curly'}, moe = {
+      name    : 'moe',
+      getName : function() { return 'name: ' + this.name; },
+      sayHi   : function() { return 'hi: ' + this.name; }
+    };
+    curly.getName = moe.getName;
+    _.bindAll(moe, 'getName', 'sayHi');
+    curly.sayHi = moe.sayHi;
+    equal(curly.getName(), 'name: curly', 'unbound function is bound to current object');
+    equal(curly.sayHi(), 'hi: moe', 'bound function is still bound to original object');
+
+    curly = {name : 'curly'};
+    moe = {
+      name    : 'moe',
+      getName : function() { return 'name: ' + this.name; },
+      sayHi   : function() { return 'hi: ' + this.name; }
+    };
+    _.bindAll(moe);
+    curly.sayHi = moe.sayHi;
+    equal(curly.sayHi(), 'hi: moe', 'calling bindAll with no arguments binds all functions to the object');
+  });
+
+  test("memoize", function() {
+    var fib = function(n) {
+      return n < 2 ? n : fib(n - 1) + fib(n - 2);
+    };
+    var fastFib = _.memoize(fib);
+    equal(fib(10), 55, 'a memoized version of fibonacci produces identical results');
+    equal(fastFib(10), 55, 'a memoized version of fibonacci produces identical results');
+
+    var o = function(str) {
+      return str;
+    };
+    var fastO = _.memoize(o);
+    equal(o('toString'), 'toString', 'checks hasOwnProperty');
+    equal(fastO('toString'), 'toString', 'checks hasOwnProperty');
+  });
+
+  asyncTest("delay", 2, function() {
+    var delayed = false;
+    _.delay(function(){ delayed = true; }, 100);
+    setTimeout(function(){ ok(!delayed, "didn't delay the function quite yet"); }, 50);
+    setTimeout(function(){ ok(delayed, 'delayed the function'); start(); }, 150);
+  });
+
+  asyncTest("defer", 1, function() {
+    var deferred = false;
+    _.defer(function(bool){ deferred = bool; }, true);
+    _.delay(function(){ ok(deferred, "deferred the function"); start(); }, 50);
+  });
+
+  asyncTest("throttle", 2, function() {
+    var counter = 0;
+    var incr = function(){ counter++; };
+    var throttledIncr = _.throttle(incr, 32);
+    throttledIncr(); throttledIncr();
+
+    equal(counter, 1, "incr was called immediately");
+    _.delay(function(){ equal(counter, 2, "incr was throttled"); start(); }, 64);
+  });
+
+  asyncTest("throttle arguments", 2, function() {
+    var value = 0;
+    var update = function(val){ value = val; };
+    var throttledUpdate = _.throttle(update, 32);
+    throttledUpdate(1); throttledUpdate(2);
+    _.delay(function(){ throttledUpdate(3); }, 64);
+    equal(value, 1, "updated to latest value");
+    _.delay(function(){ equal(value, 3, "updated to latest value"); start(); }, 96);
+  });
+
+  asyncTest("throttle once", 2, function() {
+    var counter = 0;
+    var incr = function(){ return ++counter; };
+    var throttledIncr = _.throttle(incr, 32);
+    var result = throttledIncr();
+    _.delay(function(){
+      equal(result, 1, "throttled functions return their value");
+      equal(counter, 1, "incr was called once"); start();
+    }, 64);
+  });
+
+  asyncTest("throttle twice", 1, function() {
+    var counter = 0;
+    var incr = function(){ counter++; };
+    var throttledIncr = _.throttle(incr, 32);
+    throttledIncr(); throttledIncr();
+    _.delay(function(){ equal(counter, 2, "incr was called twice"); start(); }, 64);
+  });
+
+  asyncTest("throttle repeatedly with results", 6, function() {
+    var counter = 0;
+    var incr = function(){ return ++counter; };
+    var throttledIncr = _.throttle(incr, 64);
+    var results = [];
+    var saveResult = function() { results.push(throttledIncr()); };
+    saveResult(); saveResult();
+    _.delay(saveResult, 32);
+    _.delay(saveResult, 80);
+    _.delay(saveResult, 96);
+    _.delay(saveResult, 144);
+    _.delay(function() {
+      equal(results[0], 1, "incr was called once");
+      equal(results[1], 1, "incr was throttled");
+      equal(results[2], 1, "incr was throttled");
+      equal(results[3], 2, "incr was called twice");
+      equal(results[4], 2, "incr was throttled");
+      equal(results[5], 3, "incr was called trailing");
+      start();
+    }, 192);
+  });
+
+  asyncTest("throttle triggers trailing call when invoked repeatedly", 2, function() {
+    var counter = 0;
+    var limit = 48;
+    var incr = function(){ counter++; };
+    var throttledIncr = _.throttle(incr, 32);
+
+    var stamp = new Date;
+    while ((new Date - stamp) < limit) {
+      throttledIncr();
+    }
+    var lastCount = counter;
+    ok(counter > 1);
+
+    _.delay(function() {
+      ok(counter > lastCount);
+      start();
+    }, 96);
+  });
+
+  asyncTest("debounce", 1, function() {
+    var counter = 0;
+    var incr = function(){ counter++; };
+    var debouncedIncr = _.debounce(incr, 32);
+    debouncedIncr(); debouncedIncr();
+    _.delay(debouncedIncr, 16);
+    _.delay(function(){ equal(counter, 1, "incr was debounced"); start(); }, 96);
+  });
+
+  asyncTest("debounce asap", 4, function() {
+    var a, b;
+    var counter = 0;
+    var incr = function(){ return ++counter; };
+    var debouncedIncr = _.debounce(incr, 64, true);
+    a = debouncedIncr();
+    b = debouncedIncr();
+    equal(a, 1);
+    equal(b, 1);
+    equal(counter, 1, 'incr was called immediately');
+    _.delay(debouncedIncr, 16);
+    _.delay(debouncedIncr, 32);
+    _.delay(debouncedIncr, 48);
+    _.delay(function(){ equal(counter, 1, "incr was debounced"); start(); }, 128);
+  });
+
+  asyncTest("debounce asap recursively", 2, function() {
+    var counter = 0;
+    var debouncedIncr = _.debounce(function(){
+      counter++;
+      if (counter < 10) debouncedIncr();
+    }, 32, true);
+    debouncedIncr();
+    equal(counter, 1, "incr was called immediately");
+    _.delay(function(){ equal(counter, 1, "incr was debounced"); start(); }, 96);
+  });
+
+  test("once", function() {
+    var num = 0;
+    var increment = _.once(function(){ num++; });
+    increment();
+    increment();
+    equal(num, 1);
+  });
+
+  test("wrap", function() {
+    var greet = function(name){ return "hi: " + name; };
+    var backwards = _.wrap(greet, function(func, name){ return func(name) + ' ' + name.split('').reverse().join(''); });
+    equal(backwards('moe'), 'hi: moe eom', 'wrapped the saluation function');
+
+    var inner = function(){ return "Hello "; };
+    var obj   = {name : "Moe"};
+    obj.hi    = _.wrap(inner, function(fn){ return fn() + this.name; });
+    equal(obj.hi(), "Hello Moe");
+
+    var noop    = function(){};
+    var wrapped = _.wrap(noop, function(fn){ return Array.prototype.slice.call(arguments, 0); });
+    var ret     = wrapped(['whats', 'your'], 'vector', 'victor');
+    deepEqual(ret, [noop, ['whats', 'your'], 'vector', 'victor']);
+  });
+
+  test("compose", function() {
+    var greet = function(name){ return "hi: " + name; };
+    var exclaim = function(sentence){ return sentence + '!'; };
+    var composed = _.compose(exclaim, greet);
+    equal(composed('moe'), 'hi: moe!', 'can compose a function that takes another');
+
+    composed = _.compose(greet, exclaim);
+    equal(composed('moe'), 'hi: moe!', 'in this case, the functions are also commutative');
+  });
+
+  test("after", function() {
+    var testAfter = function(afterAmount, timesCalled) {
+      var afterCalled = 0;
+      var after = _.after(afterAmount, function() {
+        afterCalled++;
+      });
+      while (timesCalled--) after();
+      return afterCalled;
+    };
+
+    equal(testAfter(5, 5), 1, "after(N) should fire after being called N times");
+    equal(testAfter(5, 4), 0, "after(N) should not fire unless called N times");
+    equal(testAfter(0, 0), 1, "after(0) should fire immediately");
+  });
+
+});

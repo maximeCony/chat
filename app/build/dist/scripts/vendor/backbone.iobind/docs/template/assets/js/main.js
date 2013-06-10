@@ -1,1 +1,78 @@
-$(function(){$.ajax({url:"http://github.com/api/v2/json/commits/list/logicalparadox/backbone.iobind/master",dataType:"jsonp",success:function(t){var n=t.commits[0],r=new Date(n.committed_date),i=e[r.getMonth()]+" "+r.getDate()+", "+r.getFullYear();$("#latestCommitMessage").text(n.message),$("#latestCommitTime").text(i),$("#latestCommitURL").html(" - commit "+n.id.substring(0,6)),$("#latestCommitURL").attr("href","https://github.com"+n.url)}});var e=new Array(12);e[0]="Jan",e[1]="Feb",e[2]="Mar",e[3]="Apr",e[4]="May",e[5]="Jun",e[6]="Jul",e[7]="Aug",e[8]="Sep",e[9]="Oct",e[10]="Nov",e[11]="Dec",$("pre code").addClass("prettyprint"),prettyPrint(),$("a.scroll").click(function(e){e.preventDefault();var t=$(this).attr("href"),n=$(t+"-section");$("html,body").animate({scrollTop:n.offset().top})}),$(".view-source").click(function(){var e=$(this).next(".code-wrap"),t=e.css("display")=="none"?!0:!1;e.toggle(200),t&&$("html,body").animate({scrollTop:e.offset().top});var n=$(this).siblings(".header").find("h1").text(),r=t?"opened":"closed",i="User "+r+" "+n+".";return mpq.track("View Source clicked",{tag:n,action:r,mp_note:i}),!1}),$("a.button.github").click(function(){mpq.track("Github Fork clicked")}),$(".code-wrap").hide()});
+
+$(function () {
+
+  $.ajax({
+    url: "http://github.com/api/v2/json/commits/list/logicalparadox/backbone.iobind/master",
+    dataType: 'jsonp',
+    success: function(json) {
+      var latest = json.commits[0],
+          stamp = new Date(latest.committed_date),
+          stampString = month[stamp.getMonth()] + ' ' + stamp.getDate() + ', ' + stamp.getFullYear();
+
+      $('#latestCommitMessage').text(latest.message);
+      $('#latestCommitTime').text(stampString);
+      $('#latestCommitURL').html(' - commit ' + latest.id.substring(0, 6));
+      $('#latestCommitURL').attr('href', "https://github.com" + latest.url);
+    }
+  });
+
+  var month = new Array(12);
+      month[0] = "Jan";
+      month[1] = "Feb";
+      month[2] = "Mar";
+      month[3] = "Apr";
+      month[4] = "May";
+      month[5] = "Jun";
+      month[6] = "Jul";
+      month[7] = "Aug";
+      month[8] = "Sep";
+      month[9] = "Oct";
+      month[10] = "Nov";
+      month[11] = "Dec";
+
+
+  $('pre code').addClass('prettyprint');
+  prettyPrint();
+
+  $('a.scroll').click(function (e) {
+    e.preventDefault();
+
+    var section = $(this).attr('href')
+      , $scrollto = $(section + '-section');
+
+    $('html,body').animate({
+      scrollTop: $scrollto.offset().top
+    });
+  });
+
+  $('.view-source').click(function(){
+    var $obj = $(this).next('.code-wrap')
+      , will = ($obj.css('display') == 'none') ? true : false;
+
+    $obj.toggle(200);
+
+    if (will) {
+      $('html,body').animate({
+        scrollTop: $obj.offset().top
+      });
+    }
+
+    var tag = $(this).siblings('.header').find('h1').text()
+      , action = (will) ? 'opened' : 'closed'
+      , note = 'User ' + action + ' ' + tag + '.';
+
+    mpq.track('View Source clicked', {
+      'tag': tag,
+      'action': action,
+      'mp_note': note
+    });
+
+    return false;
+  });
+
+  $('a.button.github').click(function () {
+    mpq.track('Github Fork clicked');
+  });
+
+  $('.code-wrap').hide();
+});

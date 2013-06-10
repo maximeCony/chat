@@ -1,1 +1,7 @@
-define(["require","text!../noext"],function(e){return{noext:e("text!../noext"),dirPath:e.toUrl("."),parentPath:e.toUrl("..")}});
+define(function (require) {
+    return {
+        noext: require('text!../noext'),
+        dirPath: require.toUrl('.'),
+        parentPath: require.toUrl('..')
+    };
+});

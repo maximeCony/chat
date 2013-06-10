@@ -1,1 +1,14 @@
-require(["toString","hasOwnProperty","prototype"],function(e,t,n){doh.register("hasOwnPropertyTests",[function(i){i.is("toString",e.name),i.is("hasOwnProperty",t.name),i.is("prototype",n.name)}]),doh.run()});
+require(["toString", "hasOwnProperty", "prototype"], function(toString, hop, p) {
+        doh.register(
+            "hasOwnPropertyTests",
+            [
+                function hasOwnPropertyTests(t){
+                    t.is("toString", toString.name);
+                    t.is("hasOwnProperty", hop.name);
+                    t.is("prototype", p.name);
+                }
+            ]
+        );
+        doh.run();
+    }
+);

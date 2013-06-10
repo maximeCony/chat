@@ -1,1 +1,9 @@
-function define(e){log(e)}function badDefine(e){log("BAD DEFINE! "+e)};
+
+function define(message) {
+    log(message);
+}
+
+
+function badDefine(message) {
+    log("BAD DEFINE! " + message);
+}

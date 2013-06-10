@@ -1,1 +1,7 @@
-define(["backbone","iosync","iobind"],function(e){return e});
+define([
+  	'backbone',
+  	'iosync',
+  	'iobind'
+  ], function(Backbone) {
+    return Backbone;
+});

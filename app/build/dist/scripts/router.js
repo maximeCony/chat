@@ -1,1 +1,114 @@
-define(["jquery","underscore","backbone","views/message/FormView","collections/MessageCollection","collections/RoomCollection","views/message/ListView","views/room/ListView","views/user/FormView","views/room/FormView"],function(e,t,n,r,i,s,o,u,a,f){var l=n.Router.extend({routes:{"":"user",room:"room","room/:_id/chat":"chat"},initialize:function(){this.appContainer=e("#app")},start:function(){n.history.start()},room:function(){rooms=new s;var t=new f;this.appContainer.empty().append("<h2>Create a new room</h2>",t.render().el,"<h2>Or join an existing one</h2>",'<section id="rooms"></section>');var n=new u({collection:rooms,el:e("#rooms")});n.render(),rooms.fetch()},user:function(){var e=new a;this.appContainer.empty().append("<h2>What's your name?</h2>",e.render().el)},chat:function(t){window.socket.emit("room:join",{_id:t});var n=new i,s=new r;this.appContainer.empty().append("<section id='messages'></section>",s.render().el);var u=(new o({collection:n,el:e("#messages")})).resize();u.render(),n.fetch()}}),c=function(){appRouter=new l,appRouter.start()};return{initialize:c}});
+define([
+  'jquery',
+  'underscore',
+  'backbone',
+  'views/message/FormView',
+  'collections/MessageCollection',
+  'collections/RoomCollection',
+  'views/message/ListView',
+  'views/room/ListView',
+  'views/user/FormView',
+  'views/room/FormView'
+  ], function($, _, Backbone, MessageFormView, MessageCollection, RoomCollection, MessageListView, RoomListView, UserFormView, RoomFormView){
+    
+    var AppRouter = Backbone.Router.extend({
+      routes: { 
+        "": "user",
+        "room": "room",
+        "room/:_id/chat": "chat"
+    },
+
+    initialize: function() {
+      //get the app container
+      this.appContainer = $('#app');
+    },
+
+    start: function(){
+      //start backbon history
+      Backbone.history.start();
+    },
+
+    room: function(){
+
+      //initialize the collection
+      rooms = new RoomCollection();
+      
+      //create a new MessageFormView
+      var roomFormView = new RoomFormView();
+      
+      //set render content to the app container
+      this.appContainer.empty().append(
+        "<h2>Create a new room</h2>",
+        roomFormView.render().el,
+        "<h2>Or join an existing one</h2>",
+        '<section id="rooms"></section>'
+      );
+      
+      // setup the messages view
+      var roomListView = new RoomListView({
+        collection: rooms,
+        el: $('#rooms')
+      });
+      
+      //render models already on the collection
+      roomListView.render();
+
+      //get data from the server
+      rooms.fetch();
+    },
+
+    user: function(){
+      
+      //create a new UserFormView
+      var userFormView = new UserFormView();
+      
+      //set the content of the view to the application container
+      this.appContainer.empty().append(
+        "<h2>What's your name?</h2>", 
+        userFormView.render().el
+      );
+    },
+
+    chat: function(_id){
+
+      //emit socket to join the room
+      window.socket.emit('room:join', {_id: _id});
+
+      //initialize the collection
+      var messages = new MessageCollection();
+
+      //create a new MessageFormView
+      var messageFormView = new MessageFormView();
+      
+      //set the content of the view to the application container
+      this.appContainer.empty().append(
+        "<section id='messages'></section>", 
+        messageFormView.render().el
+      );
+
+      // setup the messages view
+      var messageListView = new MessageListView({
+        collection: messages,
+        el: $('#messages')
+      }).resize();
+
+      //render models already on the collection
+      messageListView.render();
+
+      //get data from the server
+      messages.fetch();
+      
+    }
+});
+
+var initialize = function(){
+
+  appRouter = new AppRouter;
+      //start the app
+      appRouter.start();
+  };
+
+  return {
+      initialize: initialize
+  };
+});

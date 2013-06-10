@@ -1,1 +1,8 @@
-define(["require","text!./util.html","text!../auxil.html","./nested/thing"],function(e){return{dotPath:e.toUrl("."),html:e("text!./util.html"),auxHtml:e("text!../auxil.html"),thing:e("./nested/thing")}});
+define(function (require) {
+    return {
+        dotPath: require.toUrl('.'),
+        html: require('text!./util.html'),
+        auxHtml: require('text!../auxil.html'),
+        thing: require('./nested/thing')
+    };
+});

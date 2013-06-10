@@ -1,1 +1,5 @@
-define({load:function(e,t,n){t([e],n)}});
+define({
+    load: function(name, req, load) {
+        req([name], load);
+    }
+});

@@ -4,5 +4,3 @@
  * MIT Licensed
  * https://github.com/logicalparadox/backbone.iobind
  */
-
-;

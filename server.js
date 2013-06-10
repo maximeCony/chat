@@ -38,7 +38,6 @@ app.configure('development', function(){
     appDir = "/app";
     //serve static files
     app.use("/", express.static(__dirname + appDir));
-    console.log(__dirname + appDir);
     app.set('views', __dirname + appDir);
 });
 
@@ -49,7 +48,6 @@ app.configure('production', function(){
     appDir = "/app/build/dist";
     //serve static files
     app.use("/", express.static(__dirname + appDir));
-    console.log(__dirname + appDir);
     app.set('views', __dirname + appDir);
 });
 

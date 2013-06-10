@@ -1,1 +1,5 @@
-define(["require","exports","module"],function(e,t,n){return{apiKey:n.config().apiKey}});
+define(function (require, exports, module) {
+    return {
+        apiKey: module.config().apiKey
+    };
+});
