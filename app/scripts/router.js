@@ -31,7 +31,7 @@ define([
     room: function(){
 
       //initialize the collection
-      rooms = new RoomCollection();
+      var rooms = new RoomCollection();
       
       //create a new MessageFormView
       var roomFormView = new RoomFormView();
