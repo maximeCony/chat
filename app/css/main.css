@@ -29,15 +29,16 @@ body {
 
 .bubble {
     border-radius: 0 20px 20px 20px;
-    width: 60%;
-    margin-right: 30%;
+    display: table;
+    margin: 11px;
 }
 
 .userBubble {
     border-radius: 20px 20px 0 20px;
-    width: 60%;
-    text-align: right;
-    margin-left: 30%;
+    display: table;
+    margin-bottom: 11px;
+    margin-right: 11px;
+    margin-top: 11px;
 }
 
 
