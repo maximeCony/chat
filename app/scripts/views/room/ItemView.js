@@ -8,6 +8,9 @@ define([
     var RoomView = Backbone.View.extend({
       tagName: 'div',
       className: 'room alert alert-info',
+      events: {
+        'click .joinRoom': 'joinRoom'
+      },
 
       render: function(){
         
@@ -17,7 +20,15 @@ define([
         this.$el.html(compiledTemplate);
 
         return this;
+      },
+
+      joinRoom: function(){
+        //emit socket to join the room
+        window.socket.emit('room:join', {
+          _id: this.model.attributes._id
+        });
       }
+
     });
   // Our module now returns our view
   return RoomView;

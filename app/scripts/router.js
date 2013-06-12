@@ -69,10 +69,7 @@ define([
       );
     },
 
-    chat: function(_id){
-
-      //emit socket to join the room
-      window.socket.emit('room:join', {_id: _id});
+    chat: function(){
 
       //initialize the collection
       var messages = new MessageCollection();

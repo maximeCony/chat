@@ -2,7 +2,7 @@ body {
     background: url('/img/back.png')
 }
 
-.btn, button, input {
+.btn, button, input, select {
 	border-radius: 0 !important;
 }
 
@@ -12,10 +12,10 @@ body {
     margin: auto;
 }
 
-.joinRoom {
+.joinButtonBox {
     float: right;
-    margin-right: -0.5em;
-    margin-top: -0.35em;
+    margin-right: -7px;
+    margin-top: -5px;
 }
 
 .alert {
@@ -69,6 +69,15 @@ body {
 
 #messageContent{
     width: 75%;
+}
+
+/* Room */
+#roomStatus {
+    width: auto;
+}
+
+#roomPasswordGroup {
+    display: none;
 }
 
 

@@ -11,7 +11,8 @@ define([
       className: 'pure-form',
       id: 'roomForm',
       events: {
-        'submit': 'saveRoom' //submit the form
+        'submit': 'saveRoom', //submit the form
+        'change #roomStatus': 'toogleRoomStatus'
       },
 
       /*
@@ -22,7 +23,7 @@ define([
         e.preventDefault();
 
         //get the inputs
-        var name = $('#roomName').val();
+        var name = this.$('#roomName').val();
 
         // prevent empty submit
         if (!name) return;
@@ -31,6 +32,18 @@ define([
         var _room = new RoomModel({
           name: name
         });
+
+        if(this.$('#roomStatus').val() === "Private") {
+
+          //get the password
+          var password = this.$('#roomPassword').val();
+
+          // prevent empty submit
+          if (!password) return;
+          _room.set('password', password);
+
+          console.log('_room', _room);
+        }
 
         // save the room (send socket)
         _room.save();
@@ -50,6 +63,18 @@ define([
         this.$el.html(compiledTemplate);
 
         return this;
+      },
+
+      /*
+      * Toogle Room Status
+      */
+      toogleRoomStatus :function(){
+
+        if(this.$('#roomStatus').val() === "Public") {
+          this.$('#roomPasswordGroup').hide();
+        } else {
+          this.$('#roomPasswordGroup').show();
+        }
       }
 
     });
