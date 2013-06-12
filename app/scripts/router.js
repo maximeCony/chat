@@ -8,8 +8,10 @@ define([
   'views/message/ListView',
   'views/room/ListView',
   'views/user/FormView',
-  'views/room/FormView'
-  ], function($, _, Backbone, MessageFormView, MessageCollection, RoomCollection, MessageListView, RoomListView, UserFormView, RoomFormView){
+  'views/room/FormView',
+  'views/canvas/CanvasView'
+  ], function($, _, Backbone, MessageFormView, MessageCollection, RoomCollection, 
+    MessageListView, RoomListView, UserFormView, RoomFormView, CanvasView){
     
     var AppRouter = Backbone.Router.extend({
       routes: { 
@@ -80,8 +82,12 @@ define([
       //create a new MessageFormView
       var messageFormView = new MessageFormView();
       
+      //create a new MessageFormView
+      var canvasView = new CanvasView();
+      
       //set the content of the view to the application container
       this.appContainer.empty().append(
+        canvasView.el,
         "<section id='messages'></section>", 
         messageFormView.render().el
       );
