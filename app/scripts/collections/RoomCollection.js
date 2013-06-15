@@ -15,14 +15,17 @@ define([
           this.ioBind('join', window.socket, this.serverJoin, this);
       },
       
-      serverCreate: function (json) {
+      serverCreate: function (room) {
           // make sure no duplicates, just in case
-          if (!this.get(json._id)) {
-            this.add(json);
+          if (!this.get(room._id)) {
+            this.add(room);
           }
       },
 
-      serverJoin: function(json){
+      serverJoin: function(room){
+        //get the roomName
+        Backbone.history.roomName = room.name;
+        //navigate to the chat page
         Backbone.history.navigate('chat', { trigger: true });
       }
 

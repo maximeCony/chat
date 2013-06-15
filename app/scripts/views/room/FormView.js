@@ -41,8 +41,6 @@ define([
           // prevent empty submit
           if (!password) return;
           _room.set('password', password);
-
-          console.log('_room', _room);
         }
 
         // save the room (send socket)

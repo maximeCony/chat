@@ -6,6 +6,13 @@ body {
 	border-radius: 0 !important;
 }
 
+.rotate {
+    /* Rotate div */
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg); /* IE 9 */
+    -webkit-transform:rotate(90deg); /* Safari and Chrome */
+}
+
 #app, #title {
 	text-align: center;
     max-width: 30em;
@@ -72,12 +79,30 @@ body {
 }
 
 /* Room */
+
 #roomStatus {
+    border-left: 0 none;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     width: auto;
+}
+
+#roomName {
+    border-right: 0 none;
 }
 
 #roomPasswordGroup {
     display: none;
 }
 
+#roomNameTitle {
+    font-size: 3em;
+    margin-left: 0.2em;
+    opacity: 0.1;
+    position: absolute;
+    top: 0.3em;
+}
+
+#roomNameTitle:hover {
+    opacity: 1;
+}
 

@@ -34,6 +34,11 @@
             socket.emit('rooms:create', room);
             //send room to the other clients
             socket.broadcast.emit('rooms:create', room);
+            //join the room
+            joinRoom({
+                room: room,
+                socket: socket
+            });
             callback(null, room);
         });        
     };
@@ -62,16 +67,24 @@
             //if room not found
             if(room === null) {
                 socket.emit('room/' + data._id + ':badPassword');
-            } else {
-                //join the room
-                socket.join(room._id);
-                //confirm that the user join the room
-                socket.emit('rooms:join', {_id: room._id});
-                //notice other users in the room
-                //io.sockets.in(socket.room_id).emit('rooms:joinedBy', {username: data.username});
-            }
-                
+                //if not join room
+            } else joinRoom({
+                room: room,
+                socket: socket
+            });
         });
+    };
+
+    var joinRoom = function(options){
+        //join the room
+        options.socket.join(options.room._id);
+        //confirm that the user has join the room
+        options.socket.emit('rooms:join', {
+            _id: options.room._id,
+            name: options.room.name
+        });
+        //notice other users in the room
+        //io.sockets.in(socket.room_id).emit('rooms:joinedBy', {username: data.username});
     };
 
     return this;

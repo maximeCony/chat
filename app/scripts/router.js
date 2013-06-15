@@ -30,6 +30,8 @@ define([
 
     room: function(){
 
+      console.log('room')
+
       //initialize the collection
       var rooms = new RoomCollection();
       
@@ -71,6 +73,12 @@ define([
 
     chat: function(){
 
+      //if the user reload the page (and losse his socket) he will have to rejoin
+      if(!Backbone.history.roomName) {
+        //redirect to /room
+        return Backbone.history.navigate('room', { trigger: true });
+      }
+
       //initialize the collection
       var messages = new MessageCollection();
 
@@ -79,7 +87,8 @@ define([
       
       //set the content of the view to the application container
       this.appContainer.empty().append(
-        "<section id='messages'></section>", 
+        "<div id='roomNameTitle'>" + Backbone.history.roomName + 
+        "</div><section id='messages'></section>", 
         messageFormView.render().el
       );
 
