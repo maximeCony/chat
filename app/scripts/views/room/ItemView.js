@@ -1,7 +1,7 @@
 define([
   'jquery',
   'underscore',
-  'backbone',
+  'bbloader',
   'text!templates/room/item.html'
   ], function($, _, Backbone, RoomTemplate){
 
@@ -9,7 +9,11 @@ define([
       tagName: 'div',
       className: 'room alert alert-info',
       events: {
-        'click .joinRoom': 'joinRoom'
+        'submit .joinButtonBox': 'joinRoom'
+      },
+
+      initialize: function () {
+        this.model.ioBind('badPassword', window.socket, this.badPassword, this);
       },
 
       render: function(){
@@ -23,10 +27,30 @@ define([
       },
 
       joinRoom: function(){
+
+        this.$('.joinRoom').html('Wait');
+
+        //get the password input value
+        var passwordInput = this.$('.roomPassword').val();
+
+        //prevent empty validation
+        if(passwordInput === '') return this.badPassword();
+
+        //get the password value (null mean no password)
+        var password = passwordInput || null;
+
         //emit socket to join the room
         window.socket.emit('room:join', {
-          _id: this.model.attributes._id
+          _id: this.model.attributes._id,
+          password: password
         });
+      },
+
+      badPassword: function(){
+
+        this.$('.joinRoom').html('Retry');
+        this.$el.removeClass('alert-info').addClass('alert-error');
+        return false;
       }
 
     });

@@ -47,12 +47,6 @@ define([
 
         // save the room (send socket)
         _room.save();
-
-        //wait server response to get an id
-        _room.on("change:_id", function() {
-          //navigate to the chat
-          Backbone.history.navigate('room/' + _room.id + '/chat', { trigger: true });
-        });
       },
 
       render: function(){

@@ -1,2 +1,11 @@
 <span class="roomName"><%- name %></span>
-<a class="joinRoom btn" href="#room/<%- _id %>/chat">Join</a>
+<% if (password !== null) { %>
+    <form class="input-append joinButtonBox">
+	    <input class="span2 roomPassword" type="password" placeholder="Password">
+	    <button class="btn joinRoom" type="submit">Join</button>
+	</form>
+<% } else { %>
+	<form class="input-append joinButtonBox">
+	    <button class="btn joinRoom" type="submit">Join</button>
+	</form>
+<% } %>

@@ -12,6 +12,7 @@ define([
       initialize: function () {
           // bind create event from the server
           this.ioBind('create', window.socket, this.serverCreate, this);
+          this.ioBind('join', window.socket, this.serverJoin, this);
       },
       
       serverCreate: function (json) {
@@ -19,6 +20,10 @@ define([
           if (!this.get(json._id)) {
             this.add(json);
           }
+      },
+
+      serverJoin: function(json){
+        Backbone.history.navigate('chat', { trigger: true });
       }
 
     });

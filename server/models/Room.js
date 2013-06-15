@@ -5,7 +5,7 @@ module.exports = function(mongoose, models) {
 		name: String,
 		lastActivity: { type: Date, default: Date.now }, 
 		messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
-		password: String
+		password: { type: String, default: null }
 	})
 	.pre('remove', function(next) {
 		//Delete Cascade

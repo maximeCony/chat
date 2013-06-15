@@ -1,5 +1,11 @@
 <span class="roomName"><%- name %></span>
-<div class="input-append joinButtonBox">
-    <input class="span2 roomPassword" type="password" placeholder="Password">
-    <button class="btn joinRoom" type="button">Join</button>
-</div>
+<% if (password !== null) { %>
+    <form class="input-append joinButtonBox">
+	    <input class="span2 roomPassword" type="password" placeholder="Password">
+	    <button class="btn joinRoom" type="submit">Join</button>
+	</form>
+<% } else { %>
+	<form class="input-append joinButtonBox">
+	    <button class="btn joinRoom" type="submit">Join</button>
+	</form>
+<% } %>

@@ -15,7 +15,7 @@ define([
       routes: { 
         "": "user",
         "room": "room",
-        "room/:_id/chat": "chat"
+        "chat": "chat"
     },
 
     initialize: function() {

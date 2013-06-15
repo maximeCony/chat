@@ -10,9 +10,6 @@
     var controllers = {};
     controllers.DefaultController = require('./controllers/DefaultController')(handleError, models);
 
-    //store the rooms
-    var rooms = [];
-
     //routing
     this.start = function(){
 
@@ -42,7 +39,7 @@
             socket.on('message:create', controllers.MessageController.create);
 
             //room controller
-            controllers.RoomController = require('./controllers/RoomController')(handleError, models, socket, rooms);
+            controllers.RoomController = require('./controllers/RoomController')(handleError, models, socket, io);
             //Read all rooms
             socket.on('rooms:read', controllers.RoomController.read);
             //Create a new room
